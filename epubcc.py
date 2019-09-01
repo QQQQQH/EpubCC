@@ -1,6 +1,5 @@
 import glob
 import os
-import re
 import shutil
 import sys
 import zipfile
@@ -24,9 +23,7 @@ def find_paths(config):
     (trunk, ext) = os.path.splitext(output_file_path)
     output_file_path = '%s.converted%s' % (trunk, ext)
 
-
     extracted_path = find_extracted_path(input_file_path)
-
     print('Trying extracting %s to %s' % (input_file_path, extracted_path))
     zip_file = zipfile.ZipFile(input_file_path)
     zip_file.extractall(extracted_path)
@@ -37,16 +34,9 @@ def find_paths(config):
 def find_extracted_path(input_path):
     candidate = os.path.splitext(input_path)[0]
     if os.path.exists(candidate):
-        match = re.match('(.*)-(\d+)', candidate)
-        if match:
-            candidate = match.group(1)
-            digit = int(match.group(2)) + 1
-        else:
-            digit = 1
-        candidate = "%s-%d" % (candidate, digit)
-        return find_extracted_path(candidate)
-    else:
-        return candidate
+        print('Removing existing directory %s' % candidate)
+        shutil.rmtree(candidate)
+    return candidate
 
 
 def find_opf_path(input_path):
@@ -122,10 +112,8 @@ def add_dir_to_zip(archive, base, current):
 def repack_files(extracted_path, output_file_path):
     (trunk, ext) = os.path.splitext(output_file_path)
     if os.path.isfile(output_file_path):
-        output_file_path = '%s.new%s' % (trunk, ext)
-        if os.path.isfile(output_file_path):
-            print('Removing existing file %s', output_file_path)
-            os.remove(output_file_path)
+        print('Removing existing file %s', output_file_path)
+        os.remove(output_file_path)
     print('Repacking converted files into %s' % output_file_path)
     epub = zipfile.ZipFile(output_file_path, "w", zipfile.ZIP_DEFLATED)
     add_dir_to_zip(epub, extracted_path, '.')
