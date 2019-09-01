@@ -125,7 +125,7 @@ def repack_files(extracted_path, output_file_path):
 
 def main():
     if len(sys.argv) != 3:
-        sys.stderr.write('usage: epubcc.py <infile> config \n <infile> must be ".epub" file.')
+        sys.stderr.write('usage: epubcc.py <in_file> <config_file> \n <in_file> must be ".epub" file.')
         sys.exit(1)
 
     config = sys.argv[-1]
