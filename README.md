@@ -1,4 +1,4 @@
-#  EpubCC —— 基于OpenCC的Epub简繁中文转换工具
+#  EpubCC —— 基于OpenCC的epub简繁中文转换工具
 
 EpubCC支持epub格式的电子书的简繁体转换，依赖[OpenCC](https://github.com/BYVoid/OpenCC)。
 
