@@ -19,7 +19,8 @@ def find_paths(config):
         sys.stderr.write('%s is not a valid input file.' % input_file_path)
         sys.exit(1)
 
-    output_file_path = convert(os.path.dirname(input_file_path), input_file_path, config)
+    (dir_name, base_name) = (os.path.dirname(input_file_path), os.path.basename(input_file_path))
+    output_file_path = os.path.join(dir_name, convert(dir_name, base_name, config))
     (trunk, ext) = os.path.splitext(output_file_path)
     output_file_path = '%s.converted%s' % (trunk, ext)
 
